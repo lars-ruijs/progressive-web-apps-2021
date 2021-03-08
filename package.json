@@ -1,0 +1,25 @@
+{
+  "name": "progressive-web-apps-2021",
+  "version": "1.0.0",
+  "description": "Pictures from Space, a progressive web app built with the NASA API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lars-ruijs/progressive-web-apps-2021.git"
+  },
+  "author": "lars-ruijs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lars-ruijs/progressive-web-apps-2021/issues"
+  },
+  "homepage": "https://github.com/lars-ruijs/progressive-web-apps-2021#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
