@@ -1,0 +1,284 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap");
+
+/* GLOBAL STYLES */
+
+:root {
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.hide {
+  display: none;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  font-family: var(--font);
+  text-transform: uppercase;
+  font-weight: 300;
+  line-height: 1.8em;
+  margin-top: -2.2em;
+}
+
+h1 span {
+  font-size: 2.5em;
+  font-weight: 600;
+}
+
+p {
+  color: white;
+  text-align: center;
+  font-family: var(--font);
+  font-weight: 300;
+  margin: 0.5em 0 3em 0;
+}
+
+img:not(section img) {
+  width: 22em;
+  display: block;
+  margin: 0 auto;
+  margin-top: 4em;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  font-family: var(--font);
+  font-weight: 700;
+  background-color: #171717;
+  text-transform: uppercase;
+  color: white;
+  padding: 1.5em 3em;
+  border: none;
+  border-radius: 99em;
+  margin-top: 2em;
+}
+
+main {
+  padding: 0 5vw 2vw 5vw;
+}
+
+img.loader {
+  margin-top: 1em;
+  max-width: 17em;
+}
+
+h2:not(section article h2) {
+  color: white;
+  font-family: var(--font);
+  text-align: center;
+  margin: 5em 0 0 0;
+  text-transform: uppercase;
+}
+
+footer {
+  padding: 2em;
+  background-color: #242424;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* OVERVIEW PAGE */
+
+section.astronomy {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 4em;
+}
+
+section.astronomy article {
+  font-family: var(--font);
+  background-color: #242424;
+  font-size: 0.9em;
+  color: white;
+  border-radius: 0.5em;
+  padding: 0 2em 2em 2em;
+  text-align: center;
+}
+
+section.astronomy article p:first-of-type {
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 2em 0 0.3em 0;
+}
+
+section.astronomy article p {
+  font-weight: 300;
+  margin: 0;
+}
+
+section.astronomy article figure {
+  height: 18em;
+  margin: 0 -2em 3em -2em;
+}
+
+section.astronomy article figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5em 0.5em 0 0;
+}
+
+section.astronomy article figure iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5em 0.5em 0 0;
+}
+
+section.rovers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 2em;
+  text-align: center;
+  color: white;
+  font-family: var(--font);
+  font-size: 0.9em;
+  margin: 0 auto;
+}
+
+section.rovers p {
+  font-weight: 300;
+  margin: 0;
+}
+
+section.rovers article figure {
+  height: 20em;
+  margin: 0 auto;
+}
+
+section.rovers figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5em;
+}
+
+section.rovers article h2 {
+  margin-top: 2em;
+}
+
+/* DETAIL PAGE */
+
+section#detail {
+  margin-top: 6em;
+  text-align: center;
+  padding: 0 10vw;
+}
+
+section#detail img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5em;
+}
+
+section#detail iframe {
+  width: 100%;
+  height: 40vw;
+}
+
+section#detail h2 {
+  margin: 4em 0 1em 0;
+}
+
+section#detail p:first-of-type {
+  padding: 0 5vw;
+  color: white;
+  font-family: var(--font);
+  text-align: center;
+  font-size: 0.93em;
+  line-height: 1.4em;
+  margin: 0 0 4em 0;
+}
+
+section#detail p {
+  padding: 0;
+  margin: 0.2em 0;
+}
+
+section#detail p:nth-of-type(2n):not(div p):not(p.description) {
+  font-weight: 700;
+  margin-top: 2em;
+  text-transform: uppercase;
+}
+
+section#detail a {
+  margin: 4em 0;
+  background-color: white;
+  color: black;
+}
+
+section#detail div.roverlaunchland {
+  width: 28em;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr 5fr;
+  gap: 1em;
+}
+
+section#detail div.roverlaunchland img {
+  width: 3em;
+}
+
+section#detail div.roverlaunchland p {
+  text-align: left;
+  margin: 0;
+}
+
+section#detail div.roverlaunchland p:first-of-type {
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0;
+}
+
+section#detail p.complete {
+  text-transform: uppercase;
+  display: inline-block;
+  background-color: rgb(25, 79, 160);
+  padding: 1em 1.5em;
+  border-radius: 99em;
+  margin: -0.5em 0 3em 0;
+}
+
+section#detail p.active {
+  text-transform: uppercase;
+  display: inline-block;
+  background-color: rgb(25, 160, 70);
+  padding: 1em 1.5em;
+  border-radius: 99em;
+  margin: -0.5em 0 3em 0;
+}
+
+section#detail p.description {
+  margin: 0 0 2em 0;
+}
+
+section#detail div.photocontainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2em;
+  margin: 3em 0;
+}
+
+section#detail div.photocontainer figure {
+  margin: 0;
+}
+
+section#detail div.photocontainer figcaption {
+  margin-top: 2em;
+}
+
+@media (max-width: 500px) {
+  section#detail div.roverlaunchland {
+    width: 12em;
+    grid-template-columns: 1fr 5fr;
+  }
+}

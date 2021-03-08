@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %> • Pictures from Space</title>
-</head>
-<body>
+    <%# Include the header module (partial) %> 
+    <%- include('./partials/head.ejs') %> 
+
     <h1>Welkom bij index</h1>
     <p><%= subtitle %></p>
+    <main>
+        <h2>Astronomy Pictures</h2>
+        <p>Pictures taken from space or about space. Featured daily on the Astronomy Picture of the Day site by NASA. Enjoy this random pick of some of their beautiful (and sometimes weird) pictures:</p>
+        <section class="astronomy">
+            <% if (data.length > 0) { %> 
+                <% data.forEach(item => { %>
+                    <article>
+                        <figure>
+                            <img src="<%= item.url %> " alt="<%= item.title %> ">
+                        </figure>
+                        <h2><%= item.title %></h2>
+                        <p>Featured on:</p>
+                        <p><%= item.date %></p>
+                        <a href="astronomy/<%= item.date %>">About this photo</a>
+                    </article>
+                <% }) %> 
+            <% } else { %> 
+            <p>Oops! There are currently no blog items to display.</p>
+            <% } %> 
+        </section>
+    </main>
 
-    <h2>All blogs:</h2>
-    <% if (data.length > 0) { %> 
-        <% data.forEach(item => { %>
-            <article>
-                <figure>
-                    <img src="<%= item.url %> " alt="<%= item.title %> ">
-                </figure>
-                <h2><%= item.title %></h2>
-                <p><%= item.date %></p>
-                <a href="astronomy/<%= item.date %>">About this photo</a>
-            </article>
-        <% }) %> 
-    <% } else { %> 
-    <p>There are no blog items to display</p>
-    <% } %> 
-</body>
-</html>
+    <%# Include the header module (partial) %> 
+    <%- include('./partials/footer.ejs') %> 
