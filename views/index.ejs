@@ -8,7 +8,22 @@
 </head>
 <body>
     <h1>Welkom bij index</h1>
-    <% const hello = "hallo"; %>
     <p><%= subtitle %></p>
+
+    <h2>All blogs:</h2>
+    <% if (data.length > 0) { %> 
+        <% data.forEach(item => { %>
+            <article>
+                <figure>
+                    <img src="<%= item.url %> " alt="<%= item.title %> ">
+                </figure>
+                <h2><%= item.title %></h2>
+                <p><%= item.date %></p>
+                <a href="astronomy/<%= item.date %>">About this photo</a>
+            </article>
+        <% }) %> 
+    <% } else { %> 
+    <p>There are no blog items to display</p>
+    <% } %> 
 </body>
 </html>

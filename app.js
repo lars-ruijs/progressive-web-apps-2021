@@ -1,4 +1,5 @@
-const express = require('express');
+import express from 'express';
+import { getData } from './modules/helpers.js';
 
 const app = express();
 
@@ -8,8 +9,13 @@ app.listen(3000);
 // Views engine
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-    res.render('index', { title: "Home", subtitle: "This is a homepage!"});
+const astronomyBase = "planetary/apod";
+const roverBase = "mars-photos/api/v1/rovers/";
+const rovers = ["Perseverance", "Curiosity", "Opportunity", "Spirit"];
+
+app.get('/', async (req, res) => {
+    const data = await getData(astronomyBase, "count=6");
+    res.render('index', { title: "Home", subtitle: "This is a homepage!", data });
 });
 
 app.get('/test/:id', (req, res) => {
