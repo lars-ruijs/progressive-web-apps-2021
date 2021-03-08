@@ -23,11 +23,14 @@ h1 {
   font-family: var(--font);
   text-transform: uppercase;
   font-weight: 300;
+}
+
+header h1 {
   line-height: 1.8em;
   margin-top: -2.2em;
 }
 
-h1 span {
+header h1 span {
   font-size: 2.5em;
   font-weight: 600;
 }
@@ -40,7 +43,7 @@ p {
   margin: 0.5em 0 3em 0;
 }
 
-img:not(section img) {
+header img {
   width: 22em;
   display: block;
   margin: 0 auto;

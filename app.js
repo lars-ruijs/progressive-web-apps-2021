@@ -31,5 +31,5 @@ app.get('/test/:id', (req, res) => {
 // 404 page
 // Source: https://expressjs.com/en/starter/faq.html
 app.use((req, res) => {
-    res.status(404).render('404');
+    res.status(404).render('404', { title: "404 Not Found" });
 });
