@@ -48,6 +48,14 @@ app.get('/astronomy/:date', async (req, res) => {
     res.render('astroDetail', { title: "Astronomy Picture", astronomyData, getDate });
 });
 
+app.get('/rover/:name/:sol', async (req, res) => {
+    const roverName = req.params.name;
+    const sol = req.params.sol;
+
+    const roverData = await getData(`${roverBase + roverName}/photos`,`sol=${sol}`);    
+    res.render('roverDetail', { title: `Pictures by ${roverName} on sol ${sol}`, roverData: roverData.photos, getDate });
+});
+
 // 404 page
 // Source: https://expressjs.com/en/starter/faq.html
 app.use((req, res) => {

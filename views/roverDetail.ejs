@@ -1,0 +1,39 @@
+<%# Include the header module (partial) %> 
+<%- include('./partials/head.ejs') %> 
+<main>
+    <section id="detail">
+        <%# Only render if there is data %> 
+        <% if (roverData && roverData.length > 0) { %> 
+            <h2><%= roverData ? roverData[0].rover.name : "Unknown Rover.";%> </h2>
+            <p class="<%= roverData[0].rover ? roverData[0].rover.status : '404'%>"><%= roverData[0].rover ? roverData[0].rover.status : "Unknown Status" %></p>
+            <div class="roverlaunchland">
+                <img src="/img/rocket.svg" alt="rocket icon" />
+                <div>
+                    <p>Launched on:</p>
+                    <p><%= roverData[0].rover ? getDate(roverData[0].rover.launch_date) : "A day in the universe"; %></p>
+                </div>
+                <img src="/img/planet.svg" alt="planet icon" />
+                <div>
+                    <p>Landed on:</p>
+                    <p><%= roverData[0].rover ? getDate(roverData[0].rover.landing_date) : "A day in the universe"; %></p>
+                </div>
+            </div>
+            <h2>Photo's:</h2>
+            <p class="description"><%= `These picture(s) were taken on sol ${roverData[0].sol}, which is equal to ${getDate(roverData[0].earth_date)} on Earth.` %> </p>
+            <div class="photocontainer">
+                <% roverData.forEach(rover => { %>
+                    <figure>
+                        <% const roverImg = rover.img_src.startsWith("https") ? rover.img_src : rover.img_src.replace("http", "https"); %> 
+                        <img src="<%= roverImg %> " alt="<%= rover.camera ? `Picture taken by ${rover.camera.full_name}` : "Picture taken by unknown camera"; %>" />
+                        <figcaption>
+                            <p><%= rover.camera ? rover.camera.full_name : "Unknown camera"; %> </p>
+                        </figcaption>
+                    </figure>
+                <% }) %> 
+            </div>
+        <% } %> 
+    </section>
+</main>
+
+<%# Include the header module (partial) %> 
+<%- include('./partials/footer.ejs') %> 
