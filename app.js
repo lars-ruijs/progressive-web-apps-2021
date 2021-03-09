@@ -1,5 +1,5 @@
 import express from 'express';
-import { getData } from './modules/helpers.js';
+import { getData, randomNum, getDate } from './modules/helpers.js';
 
 // Create a express app
 const app = express();
@@ -19,13 +19,32 @@ const roverBase = "mars-photos/api/v1/rovers/";
 const rovers = ["Perseverance", "Curiosity", "Opportunity", "Spirit"];
 
 app.get('/', async (req, res) => {
-    const data = await getData(astronomyBase, "count=6");
-    res.render('index', { title: "Home", subtitle: "This is a homepage!", data });
+    const astronomyData = await getData(astronomyBase, "count=6");
+    
+    // Fetch the max sol (max date) for each rover > fetch photo data for random sol > push to array
+    const roverData = [];
+
+    for (const rover of rovers) {
+      const roverInfo = await getData(`${roverBase + rover}`);
+      const maxSol = roverInfo.rover.max_sol;
+      const data = await getData(`${roverBase + rover}/photos`,`sol=${randomNum(maxSol)}`);
+
+      // If no pictures for this sol > fetch for sol 1
+      if(data.photos.length == 0) {
+        const defaultData = await getData(`${roverBase + rover}/photos`,`sol=1`);
+        roverData.push(defaultData);
+      }
+      // Else, push data to array.
+      else {
+        roverData.push(data);
+      }
+    }
+    res.render('index', { title: "Home", astronomyData, roverData, getDate });
 });
 
-app.get('/test/:id', (req, res) => {
-    const id = req.params.id;
-    res.send(`Hello from test! Your ID is ${id}`);
+app.get('/astronomy/:date', async (req, res) => {
+    const date = req.params.date;
+    res.send(`Hello from test! Your requested date is ${date}`);
 });
 
 // 404 page

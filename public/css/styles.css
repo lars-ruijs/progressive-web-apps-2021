@@ -82,6 +82,7 @@ h2:not(section article h2) {
 }
 
 footer {
+  margin-top: 4em;
   padding: 2em;
   background-color: #242424;
 }
@@ -277,6 +278,11 @@ section#detail div.photocontainer figure {
 
 section#detail div.photocontainer figcaption {
   margin-top: 2em;
+}
+
+article.error {
+  grid-row: 1;
+  grid-column: 1 / 4;
 }
 
 @media (max-width: 500px) {

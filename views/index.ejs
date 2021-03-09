@@ -1,26 +1,53 @@
     <%# Include the header module (partial) %> 
     <%- include('./partials/head.ejs') %> 
-
-    <h1>Welkom bij index</h1>
-    <p><%= subtitle %></p>
     <main>
         <h2>Astronomy Pictures</h2>
         <p>Pictures taken from space or about space. Featured daily on the Astronomy Picture of the Day site by NASA. Enjoy this random pick of some of their beautiful (and sometimes weird) pictures:</p>
         <section class="astronomy">
-            <% if (data.length > 0) { %> 
-                <% data.forEach(item => { %>
+            <% if (astronomyData && astronomyData.length > 0) { %> 
+                <% astronomyData.forEach(item => { %>
                     <article>
                         <figure>
-                            <img src="<%= item.url %> " alt="<%= item.title %> ">
+                            <% if (item.media_type === "video") { %> 
+                                <iframe src="<%= item.url %>" frameborder="0" allowfullscreen></iframe>
+                            <% } else if (item.media_type === "image") { %> 
+                                <img src="<%= item.url ? item.url : '/img/no-picture.png' %> " alt="<%= item.title %> ">
+                            <% } else { %>  
+                                <img src="/img/no-picture.png" alt="image not found">
+                            <% } %>                        
                         </figure>
-                        <h2><%= item.title %></h2>
+                        <h2><%= item.title ? item.title : 'No words to describe this image...' %></h2>
                         <p>Featured on:</p>
-                        <p><%= item.date %></p>
+                        <p><%= item.date ? getDate(item.date) : 'A day in the universe' %></p>
                         <a href="astronomy/<%= item.date %>">About this photo</a>
                     </article>
                 <% }) %> 
             <% } else { %> 
-            <p>Oops! There are currently no blog items to display.</p>
+                <article class="error">
+                    <p>Oops! There are currently no items to display.</p>
+                    <p>Try to refresh the page and try again.</p>
+                </article>
+            <% } %> 
+        </section>
+        <h2>Rover Pictures</h2>
+        <p>Pictures taken by the Mars rover robots.</p>
+        <section class="rovers">
+            <% if (roverData && roverData.length > 0) { %> 
+                <% roverData.forEach(item => { %>
+                    <article>
+                        <figure>
+                            <img src="<%= item.photos[0].img_src ? item.photos[0].img_src : '/img/no-picture.png' %>">
+                        </figure>
+                        <h2><%= item.photos[0].rover ? item.photos[0].rover.name : 'Unknown rover' %></h2>
+                        <p><%= item.photos[0].earth_date ? getDate(item.photos[0].earth_date) : 'A day in the universe' %></p>
+                        <a href="rover/<%= item.photos[0].rover.name %>/<%= item.photos[0].sol %>">More details</a>
+                    </article>
+                <% }) %> 
+            <% } else { %> 
+                <article class="error">
+                    <p>Oops! There are currently no items to display.</p>
+                    <p>Try to refresh the page and try again.</p>
+                </article>
             <% } %> 
         </section>
     </main>
