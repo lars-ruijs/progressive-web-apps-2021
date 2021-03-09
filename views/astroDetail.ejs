@@ -1,0 +1,40 @@
+<%# Include the header module (partial) %> 
+<%- include('./partials/head.ejs') %> 
+<main>
+    <section id="detail">
+        <%# Only render if API doesn't provide an error code %> 
+        <% if (!astronomyData.code) { %> 
+            
+            <% if (astronomyData.media_type === "video") { %> 
+                <iframe src="<%= astronomyData.url %>" frameborder="0" allowfullscreen></iframe>
+            <% } else if (astronomyData.media_type === "image") { %> 
+                <img src="<%= astronomyData.url ? astronomyData.url : '/img/no-picture.png' %> " alt="<%= astronomyData.title %> ">
+            <% } else { %>  
+                <img src="/img/no-picture.png" alt="image not found">
+            <% } %> 
+
+            <h2><%= astronomyData.title ? astronomyData.title : "Unknown picture"; %> </h2>
+            <p><%= astronomyData.explanation ? astronomyData.explanation : "There is no additional explanation for this image. We are sorry.";  %> </p>
+            
+            <p>Picture by:</p> 
+            <p><%= astronomyData.copyright ? astronomyData.copyright : "NASA"; %> </p> 
+
+            <p>Featured on:</p>
+            <p><%= astronomyData.date ? getDate(astronomyData.date) : "A day in the universe";  %> </p>
+        
+            <% if (astronomyData.media_type === "video") { %> 
+                <a href="<%= astronomyData.url ? astronomyData.url : '' %> " target="_blank">View this video</a>
+            <% } else if (astronomyData.media_type === "image") { %> 
+                <a href="<%= astronomyData.hdurl ? astronomyData.hdurl : '' %> " target="_blank">Open this photo</a>
+            <% } %> 
+
+            <% } else { %> 
+                <img src="/img/not-found.png" alt="image not found">
+                <h2>We searched the whole universe but couldn't find your requested date.</h2>
+                <p><%= astronomyData.msg ? `${astronomyData.msg} Try again with a different date.` : "Try again and refresh the page."; %></p>
+        <% } %> 
+    </section>
+</main>
+
+<%# Include the header module (partial) %> 
+<%- include('./partials/footer.ejs') %> 

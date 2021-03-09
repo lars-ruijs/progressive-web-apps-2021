@@ -44,7 +44,8 @@ app.get('/', async (req, res) => {
 
 app.get('/astronomy/:date', async (req, res) => {
     const date = req.params.date;
-    res.send(`Hello from test! Your requested date is ${date}`);
+    const astronomyData = await getData(astronomyBase, `date=${date}`);
+    res.render('astroDetail', { title: "Astronomy Picture", astronomyData, getDate });
 });
 
 // 404 page
