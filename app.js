@@ -1,5 +1,6 @@
 import express from 'express';
-import { getData, randomNum, getDate } from './modules/helpers.js';
+import { homeRout } from './routes/overview.js';
+import { astroDetailRoute, roverDetailRoute } from './routes/detail.js';
 
 // Create a express app
 const app = express();
@@ -14,38 +15,14 @@ app.set('view engine', 'ejs');
 // Source: https://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
-const astronomyBase = "planetary/apod";
-const roverBase = "mars-photos/api/v1/rovers/";
-const rovers = ["Perseverance", "Curiosity", "Opportunity", "Spirit"];
+// Home page (overview)
+app.get('/', homeRout);
 
-app.get('/', async (req, res) => {
-    const astronomyData = await getData(astronomyBase, "count=6");
-    
-    // Fetch the max sol (max date) for each rover > fetch photo data for random sol > push to array
-    const roverData = [];
+// Detail page astronomy
+app.get('/astronomy/:date', astroDetailRoute);
 
-    for (const rover of rovers) {
-      const roverInfo = await getData(`${roverBase + rover}`);
-      const maxSol = roverInfo.rover.max_sol;
-      const data = await getData(`${roverBase + rover}/photos`,`sol=${randomNum(maxSol)}`);
-
-      // If no pictures for this sol > fetch for sol 1
-      if(data.photos.length == 0) {
-        const defaultData = await getData(`${roverBase + rover}/photos`,`sol=1`);
-        roverData.push(defaultData);
-      }
-      // Else, push data to array.
-      else {
-        roverData.push(data);
-      }
-    }
-    res.render('index', { title: "Home", astronomyData, roverData, getDate });
-});
-
-app.get('/astronomy/:date', async (req, res) => {
-    const date = req.params.date;
-    res.send(`Hello from test! Your requested date is ${date}`);
-});
+// Detail page rover
+app.get('/rover/:name/:sol', roverDetailRoute);
 
 // 404 page
 // Source: https://expressjs.com/en/starter/faq.html
