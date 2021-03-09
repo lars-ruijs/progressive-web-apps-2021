@@ -28,4 +28,12 @@ export function getDate(date) {
     const month = dateObject.toLocaleString("en-US", { month: "long" });
     const year = dateObject.toLocaleString("en-US", { year: "numeric" });
     return `${month} ${day}, ${year}`;
-  }
+}
+
+export function apiSettings() {
+    const astronomyBase = "planetary/apod";
+    const roverBase = "mars-photos/api/v1/rovers/";
+    const rovers = ["Perseverance", "Curiosity", "Opportunity", "Spirit"];
+
+    return {astronomyBase, roverBase, rovers};
+}
