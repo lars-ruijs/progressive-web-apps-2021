@@ -6,6 +6,7 @@
         <% if (roverData && roverData.length > 0) { %> 
             <h2><%= roverData ? roverData[0].rover.name : "Unknown Rover.";%> </h2>
             <p class="<%= roverData[0].rover ? roverData[0].rover.status : '404'%>"><%= roverData[0].rover ? roverData[0].rover.status : "Unknown Status" %></p>
+            
             <div class="roverlaunchland">
                 <img src="/img/rocket.svg" alt="rocket icon" />
                 <div>
@@ -18,8 +19,10 @@
                     <p><%= roverData[0].rover ? getDate(roverData[0].rover.landing_date) : "A day in the universe"; %></p>
                 </div>
             </div>
+
             <h2>Photo's:</h2>
             <p class="description"><%= `These picture(s) were taken on sol ${roverData[0].sol}, which is equal to ${getDate(roverData[0].earth_date)} on Earth.` %> </p>
+            
             <div class="photocontainer">
                 <% roverData.forEach(rover => { %>
                     <figure>
@@ -31,6 +34,10 @@
                     </figure>
                 <% }) %> 
             </div>
+        <% } else { %> 
+              <img src="/img/not-found.png" alt="image not found">
+              <h2>We searched the whole universe but couldn't find the requested rover.</h2>
+              <p>The rover and/or mars sol you requested are not found. Try again with a different sol or check the spelling of the rover.</p>
         <% } %> 
     </section>
 </main>

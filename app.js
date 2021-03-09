@@ -45,7 +45,7 @@ app.get('/', async (req, res) => {
 app.get('/astronomy/:date', async (req, res) => {
     const date = req.params.date;
     const astronomyData = await getData(astronomyBase, `date=${date}`);
-    res.render('astroDetail', { title: "Astronomy Picture", astronomyData, getDate });
+    res.render('astroDetail', { title: astronomyData.title ? astronomyData.title : "Astronomy Picture", astronomyData, getDate });
 });
 
 app.get('/rover/:name/:sol', async (req, res) => {
