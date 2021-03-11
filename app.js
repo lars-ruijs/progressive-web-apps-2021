@@ -4,9 +4,10 @@ import { astroDetailRoute, roverDetailRoute } from './routes/detail.js';
 
 // Create a express app
 const app = express();
+const port = process.env.PORT || 3000;
 
 // listen for request
-app.listen(3000);
+app.listen(port);
 
 // Views engine
 app.set('view engine', 'ejs');
