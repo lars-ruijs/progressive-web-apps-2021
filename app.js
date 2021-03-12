@@ -1,3 +1,5 @@
+// Import dotenv with ES6 modules via https://github.com/motdotla/dotenv/issues/89#issuecomment-587753552
+import 'dotenv/config.js';
 import express from 'express';
 import { homeRout } from './render/overview.js';
 import { astroDetailRoute, roverDetailRoute } from './render/detail.js';

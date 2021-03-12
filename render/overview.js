@@ -1,15 +1,16 @@
-import { getData, randomNum, getDate, apiSettings } from '../modules/helpers.js';
+import { getData, randomNum, getDate } from '../modules/helpers.js';
 
 export async function homeRout(req, res) {
+  const astroBase = process.env.ASTRO_BASE;
+  const roverBase = process.env.ROVER_BASE;
+  const rovers = ["Perseverance", "Curiosity", "Opportunity", "Spirit"];
 
-  const settings = apiSettings();
-
-  const astronomyData = await getData(settings.astronomyBase, "count=6");
+  const astronomyData = await getData(astroBase, "count=6");
   
   // Fetch the max sol (max date) for each rover > fetch photo data for random sol > push to array
   const roverData = [];
 
-  for (const rover of settings.rovers) {
+  for (const rover of rovers) {
     let maxSol = 0;
 
     if(rover == "Opportunity") {
@@ -19,15 +20,15 @@ export async function homeRout(req, res) {
       maxSol = 2208;
     }
     else {
-      const roverInfo = await getData(`${settings.roverBase + rover}`);
+      const roverInfo = await getData(`${roverBase + rover}`);
       maxSol = roverInfo.rover.max_sol;
     } 
     
-    const data = await getData(`${settings.roverBase + rover}/photos`,`sol=${randomNum(maxSol)}`);
+    const data = await getData(`${roverBase + rover}/photos`,`sol=${randomNum(maxSol)}`);
 
     // If no pictures for this sol > fetch for sol 1
     if(data.photos.length == 0) {
-      const defaultData = await getData(`${settings.roverBase + rover}/photos`,`sol=1`);
+      const defaultData = await getData(`${roverBase + rover}/photos`,`sol=1`);
       roverData.push(defaultData);
     }
     // Else, push data to array.
