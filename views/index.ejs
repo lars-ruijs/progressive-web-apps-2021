@@ -34,9 +34,10 @@
         <section class="rovers">
             <% if (roverData && roverData.length > 0) { %> 
                 <% roverData.forEach(item => { %>
+                    <% const roverImg = item.photos[0].img_src.startsWith("https") ? item.photos[0].img_src : item.photos[0].img_src.replace("http", "https"); %> 
                     <article>
                         <figure>
-                            <img src="<%= item.photos[0].img_src ? item.photos[0].img_src : '/img/no-picture.png' %>">
+                            <img src="<%= roverImg %>">
                         </figure>
                         <h2><%= item.photos[0].rover ? item.photos[0].rover.name : 'Unknown rover' %></h2>
                         <p><%= item.photos[0].earth_date ? getDate(item.photos[0].earth_date) : 'A day in the universe' %></p>

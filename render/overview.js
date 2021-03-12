@@ -10,8 +10,19 @@ export async function homeRout(req, res) {
   const roverData = [];
 
   for (const rover of settings.rovers) {
-    const roverInfo = await getData(`${settings.roverBase + rover}`);
-    const maxSol = roverInfo.rover.max_sol;
+    let maxSol = 0;
+
+    if(rover == "Opportunity") {
+      maxSol = 5111;
+    }
+    else if(rover == "Spirit") {
+      maxSol = 2208;
+    }
+    else {
+      const roverInfo = await getData(`${settings.roverBase + rover}`);
+      maxSol = roverInfo.rover.max_sol;
+    } 
+    
     const data = await getData(`${settings.roverBase + rover}/photos`,`sol=${randomNum(maxSol)}`);
 
     // If no pictures for this sol > fetch for sol 1
