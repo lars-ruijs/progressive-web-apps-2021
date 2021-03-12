@@ -1,6 +1,6 @@
 import express from 'express';
-import { homeRout } from './routes/overview.js';
-import { astroDetailRoute, roverDetailRoute } from './routes/detail.js';
+import { homeRout } from './render/overview.js';
+import { astroDetailRoute, roverDetailRoute } from './render/detail.js';
 
 // Create a express app
 const app = express();
