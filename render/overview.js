@@ -1,6 +1,6 @@
 import { getData, randomNum, getDate } from '../modules/helpers.js';
 
-export async function homeRout(req, res) {
+export async function homeRoute(req, res) {
   const astroBase = process.env.ASTRO_BASE;
   const roverBase = process.env.ROVER_BASE;
   const rovers = ["Perseverance", "Curiosity", "Opportunity", "Spirit"];
