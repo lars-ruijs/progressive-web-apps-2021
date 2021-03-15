@@ -27,6 +27,10 @@ app.get('/astronomy/:date', astroDetailRoute);
 // Detail page rover
 app.get('/rover/:name/:sol', roverDetailRoute);
 
+app.get('/offline', (req, res) => {
+    res.render('offline', { title: "Offline" });
+});
+
 // 404 page
 // Source: https://expressjs.com/en/starter/faq.html
 app.use((req, res) => {
