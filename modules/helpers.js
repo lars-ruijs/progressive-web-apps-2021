@@ -1,13 +1,9 @@
 import fetch from 'node-fetch';
 
-// Constant API settings (API base URL and API key)
-const apiBase = "https://api.nasa.gov/";
-const key = "O0U6zcZfaAGpJjFRQ8kcpVdts9kgWlh7PnjXiQaK";
-
 // Fetch API data (based on a slug and optional query)
 export function getData(slug, query) {
   const data = fetch(
-    `${apiBase}${slug}?api_key=${key}${query ? "&" + query : ""}`
+    `${process.env.API_BASE}${slug}?api_key=${process.env.API_KEY}${query ? "&" + query : ""}`
   )
     .then((response) => response.json())
     .catch((error) => console.error("Error with fetch", error));
@@ -28,12 +24,4 @@ export function getDate(date) {
     const month = dateObject.toLocaleString("en-US", { month: "long" });
     const year = dateObject.toLocaleString("en-US", { year: "numeric" });
     return `${month} ${day}, ${year}`;
-}
-
-export function apiSettings() {
-    const astronomyBase = "planetary/apod";
-    const roverBase = "mars-photos/api/v1/rovers/";
-    const rovers = ["Perseverance", "Curiosity", "Opportunity", "Spirit"];
-
-    return {astronomyBase, roverBase, rovers};
 }

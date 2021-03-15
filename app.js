@@ -1,5 +1,7 @@
+// Import dotenv with ES6 modules via https://github.com/motdotla/dotenv/issues/89#issuecomment-587753552
+import 'dotenv/config.js';
 import express from 'express';
-import { homeRout } from './render/overview.js';
+import { homeRoute } from './render/overview.js';
 import { astroDetailRoute, roverDetailRoute } from './render/detail.js';
 
 // Create a express app
@@ -17,7 +19,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 // Home page (overview)
-app.get('/', homeRout);
+app.get('/', homeRoute);
 
 // Detail page astronomy
 app.get('/astronomy/:date', astroDetailRoute);
