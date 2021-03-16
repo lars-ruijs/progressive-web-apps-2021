@@ -78,6 +78,10 @@ img.notfound {
   margin: 0 auto;
 }
 
+div.offline {
+  background-color: #9c0000;
+}
+
 h2:not(section article h2) {
   color: white;
   font-family: var(--font);
