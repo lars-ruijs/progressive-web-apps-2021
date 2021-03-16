@@ -73,6 +73,11 @@ img.loader {
   max-width: 17em;
 }
 
+img.notfound {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 h2:not(section article h2) {
   color: white;
   font-family: var(--font);
