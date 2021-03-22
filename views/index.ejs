@@ -37,7 +37,7 @@
                     <% const roverImg = item.photos[0].img_src.startsWith("https") ? item.photos[0].img_src : item.photos[0].img_src.replace("http", "https"); %> 
                     <article>
                         <figure>
-                            <img src="<%= roverImg %>">
+                            <img src="<%= roverImg %>" alt="<%= item.photos[0].rover ? `picture from mars by ${item.photos[0].rover.name} rover` : 'picture from mars' %>">
                         </figure>
                         <h2><%= item.photos[0].rover ? item.photos[0].rover.name : 'Unknown rover' %></h2>
                         <p><%= item.photos[0].earth_date ? getDate(item.photos[0].earth_date) : 'A day in the universe' %></p>

@@ -44,7 +44,8 @@ p {
 }
 
 header img {
-  width: 22em;
+  width: 20em;
+  height: 13.5em;
   display: block;
   margin: 0 auto;
   margin-top: 4em;
@@ -82,7 +83,7 @@ div.offline {
   background-color: #9c0000;
 }
 
-h2:not(section article h2) {
+h2:not(section > article > h2) {
   color: white;
   font-family: var(--font);
   text-align: center;
@@ -104,7 +105,7 @@ footer p {
 
 section.astronomy {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 4em;
 }
 
@@ -217,7 +218,7 @@ section#detail p {
   margin: 0.2em 0;
 }
 
-section#detail p:nth-of-type(2n):not(div p):not(p.description) {
+section#detail p:nth-of-type(2n):not(div > p):not(p.description) {
   font-weight: 700;
   margin-top: 2em;
   text-transform: uppercase;

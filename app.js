@@ -11,6 +11,6 @@ const port = process.env.PORT || 3000;
 // Source: https://expressjs.com/en/starter/static-files.html
 app
     .set('view engine', 'ejs')
-    .use(express.static('public'))
+    .use(express.static('dist'))
     .use('/', router)
     .listen(port);
