@@ -10,6 +10,6 @@ export async function astroDetailRoute(req, res){
 export async function roverDetailRoute(req, res) {
     const roverName = req.params.name;
     const sol = req.params.sol;
-    const roverData = await getData(`${process.env.ROVER_BASE + roverName}/photos`,`sol=${sol}`);    
+    const roverData = await getData(`${process.env.ROVER_BASE + roverName}/photos`,`sol=${sol}&page=1`);    
     res.render('roverDetail', { title: `Pictures by ${roverName} on sol ${sol}`, roverData: roverData.photos, getDate });
 }
