@@ -48,6 +48,22 @@ self.addEventListener("fetch", (event) => {
         );
     }
 
+    else if(getPathName(req.url).includes("rover") || getPathName(req.url).includes("mars") || getPathName(req.url).includes("msl-raw") || getPathName(req.url).includes("mer/gallery")) {
+        // show cached request from cache
+        event.respondWith(
+            caches.match(req)
+                .then(cachedRes => {
+                    if (cachedRes) {
+                        return cachedRes;
+                    }
+                    return fetch(req)
+                        .then((fetchRes) => fetchRes)
+                        .catch((err) => {
+                            return caches.open(CORE_CACHE_NAME)
+                            .then(cache => cache.match('/offline'));});
+            })
+        );
+    }
     // For all other pages > cache page and serve from cache if possible
     else {
         event.respondWith(
