@@ -1,13 +1,13 @@
+// Special thanks to Jordy for helping me with this!
 import gulp from 'gulp';
 import minifyJS from 'gulp-uglify';
-import concat from 'gulp-concat';
 
+// Minify script.JS and move it to dist/js
 (function() {
 return gulp
   .src([
     './public/js/script.js',
   ])
   .pipe(minifyJS())
-  .pipe(concat('js/script.js'))
-  .pipe(gulp.dest('./dist/'));
+  .pipe(gulp.dest('./dist/js/'));
 })();
