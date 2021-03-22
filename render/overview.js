@@ -20,15 +20,15 @@ export async function homeRoute(req, res) {
       maxSol = 2208;
     }
     else {
-      const roverInfo = await getData(`${roverBase + rover}`);
+      const roverInfo = await getData(`${roverBase + rover}`, "page=1");
       maxSol = roverInfo.rover.max_sol;
     } 
     
-    const data = await getData(`${roverBase + rover}/photos`,`sol=${randomNum(maxSol)}`);
+    const data = await getData(`${roverBase + rover}/photos`,`sol=${randomNum(maxSol)}&page=1`);
 
     // If no pictures for this sol > fetch for sol 1
     if(data.photos.length == 0) {
-      const defaultData = await getData(`${roverBase + rover}/photos`,`sol=1`);
+      const defaultData = await getData(`${roverBase + rover}/photos`,`sol=1&page=1`);
       roverData.push(defaultData);
     }
     // Else, push data to array.
