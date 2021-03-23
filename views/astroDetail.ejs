@@ -23,9 +23,9 @@
             <p><%= astronomyData.date ? getDate(astronomyData.date) : "A day in the universe";  %> </p>
         
             <% if (astronomyData.media_type === "video") { %> 
-                <a href="<%= astronomyData.url ? astronomyData.url : '' %> " target="_blank">View this video</a>
+                <a href="<%= astronomyData.url ? astronomyData.url : '' %> " rel=”noreferrer” target="_blank">View this video</a>
             <% } else if (astronomyData.media_type === "image") { %> 
-                <a href="<%= astronomyData.hdurl ? astronomyData.hdurl : '' %> " target="_blank">Open this photo</a>
+                <a href="<%= astronomyData.hdurl ? astronomyData.hdurl : '' %> " rel=”noreferrer” target="_blank">Open this photo</a>
             <% } %> 
 
             <% } else { %> 
