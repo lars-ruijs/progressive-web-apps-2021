@@ -11,7 +11,7 @@
                             <% if (item.media_type === "video") { %> 
                                 <iframe src="<%= item.url %>" frameborder="0" allowfullscreen></iframe>
                             <% } else if (item.media_type === "image") { %> 
-                                <img src="<%= item.url ? item.url : '/img/no-picture.png' %> " alt="<%= item.title %> ">
+                                <img src="<%= item.url ? `https://res.cloudinary.com/hvacmd/image/fetch/f_auto,q_auto,w_360,h_260/${item.url}` : '/img/no-picture.png' %> " alt="<%= item.title %> ">
                             <% } else { %>  
                                 <img src="/img/no-picture.png" alt="image not found">
                             <% } %>                        
@@ -37,7 +37,7 @@
                     <% const roverImg = item.photos[0].img_src.startsWith("https") ? item.photos[0].img_src : item.photos[0].img_src.replace("http", "https"); %> 
                     <article>
                         <figure>
-                            <img src="<%= roverImg %>" alt="<%= item.photos[0].rover ? `picture from mars by ${item.photos[0].rover.name} rover` : 'picture from mars' %>">
+                            <img src="<%= `https://res.cloudinary.com/hvacmd/image/fetch/f_auto,q_auto/${roverImg}` %>" alt="<%= item.photos[0].rover ? `picture from mars by ${item.photos[0].rover.name} rover` : 'picture from mars' %>">
                         </figure>
                         <h2><%= item.photos[0].rover ? item.photos[0].rover.name : 'Unknown rover' %></h2>
                         <p><%= item.photos[0].earth_date ? getDate(item.photos[0].earth_date) : 'A day in the universe' %></p>

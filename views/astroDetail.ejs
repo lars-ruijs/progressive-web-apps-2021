@@ -8,7 +8,7 @@
             <% if (astronomyData.media_type === "video") { %> 
                 <iframe src="<%= astronomyData.url %>" frameborder="0" allowfullscreen></iframe>
             <% } else if (astronomyData.media_type === "image") { %> 
-                <img src="<%= astronomyData.url ? astronomyData.url : '/img/no-picture.png' %> " alt="<%= astronomyData.title %> ">
+                <img src="<%= astronomyData.url ? `https://res.cloudinary.com/hvacmd/image/fetch/f_auto,q_auto/${astronomyData.url}` : '/img/no-picture.png' %> " alt="<%= astronomyData.title %> ">
             <% } else { %>  
                 <img src="/img/no-picture.png" alt="image not found">
             <% } %> 
