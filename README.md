@@ -20,7 +20,7 @@ You can view the live version of Pictures from Space [here](https://picturesfrom
 | [💡 Concept](#-concept-idea)  |
 | [📊 Data](#-data)  |
 | [📌 Features](#-features)  |
-| [⬇️ How to install](#-how-to-install)  |
+| [⬇️ How to install](#%EF%B8%8F-how-to-install)  |
 | [📚 Sources](#-sources) |
 | [🔗 License](#-license) |
 
@@ -87,7 +87,7 @@ The data that I am using for my concept comes from NASA. I am using two differen
 <br>
 
 ## ⬇️ How to install
-This application is made in vanilla HTML, CSS and JavaScript. So you don't need Node or any additional packages to use this application. Before you install this application, I kindly request that you use your own API key from NASA. This is free and can be requested [here](https://api.nasa.gov/). 
+Before you install this application, I kindly request that you use your own API key from NASA and setup a document environment file. The NASA API key is free and can be requested [here](https://api.nasa.gov/). 
 
 ### Clone the repository
 ```
@@ -112,15 +112,26 @@ I have used the following sources while working on this project:
 - **NASA API** documentation about APOD (Astronomy Picture of the Day) and Mars Rover Photos. View it [here](https://api.nasa.gov/). 
 - **Mars photo API** (additional) documentation on GitHub by Chrisc Cerami. Read it [here](https://github.com/chrisccerami/mars-photo-api).
 - **APOD API** documentation by NASA on GitHub. Read it [here](https://github.com/nasa/apod-api)
-- **Actor and Interaction Diagram** documentation provided by school. Author undisclosed. Read the documentation [here](https://docs.google.com/document/d/1445IOuXNTlCki89WkGSZxwJoxbHkdzuFgp53KCC9WOc/edit?usp=sharing)
-- **Diagram symbols** used as extra source when creating the diagrams. Article by [Gliffy](https://www.gliffy.com/blog/how-to-flowchart-basic-symbols-part-1-of-3). 
-- **Routie** documentation about using the hash router library. Documentation used from the official [website](http://projects.jga.me/routie/) and their [GitHub](https://github.com/jgallen23/routie) page.
 - **Convert dates to local dates** article published by MDN. Read it [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString). 
-- **Storing data in LocalStorage** a guide by Nosa Obaseki via [LogRocket](https://blog.logrocket.com/localstorage-javascript-complete-guide/).
-- **Removing all child nodes** a code example by [JavaScript turorial](https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/).
 - **Planet Mars** image copied from [ClearPNG](https://www.cleanpng.com/png-earth-mars-planet-solar-system-terraforming-jupite-760076/preview.html).
 - **Planet Earth** image copied from [RoosKBC](https://rooskcb.nl/home/earth-blue-planet-globe-planet-41953/).
 - **Rocket, Planet and Star** icons copied from [Google Material Icons](https://material.io/resources/icons/?style=baseline).
+- **NodeJS & Express crash course** a YouTube video by the Net Ninja. View the video [here](https://www.youtube.com/watch?v=zb3Qk8SG5Ms&list=PL4cUxeGkcC9jsz4LDYc6kv3ymONOKxwBU)
+- **ExpressJS getting started** a starters guide made by the development team from ExpressJS. Read it [here](https://expressjs.com/en/starter/installing.html)
+- **Working with EJS** a video by the Net Ninja. View the video [here](https://www.youtube.com/watch?v=yXEesONd_54&list=PL4cUxeGkcC9jsz4LDYc6kv3ymONOKxwBU&index=7).
+- **Web App manifest generator** a tool made by Tomi to generate a web manifest file. You can use the tool [here](https://tomitm.github.io/appmanifest/)
+- **Maskable app icons** article written by Tiger Oakes on August 29, 2019. Published on [CSStricks](https://css-tricks.com/maskable-icons-android-adaptive-icons-for-your-pwa/)
+- **Splashscreens for iOS devices** generated with the help of a tool by Appscope. View the tool [here](https://appsco.pe/developer/splash-screens).
+- **Use ES6 modules with Node** an answer by user Peter Mortensen on Stackoverflow. Read it [here](https://stackoverflow.com/questions/45854169/how-can-i-use-an-es6-import-in-node-js)
+- **Implement DOTENV** for storing server side secrets. Documentation used from [NPM](https://www.npmjs.com/package/dotenv]
+- **Service worker examples** made by CMD teachers Joost and Declan. Adapted code from the ["examples" directory](https://github.com/cmda-minor-web/progressive-web-apps-2021/tree/master/examples).
+- **Delete old cache** answer by user 'elf' on Stackoverflow. Read the code example [here](https://stackoverflow.com/questions/45467842/how-to-clear-cache-of-service-worker)
+- **Build CSS and JS** code for the build scripts with the help of Jordy.
+- **Gulp imagemin** to minify image sizes. Used code examples from the documentation on [NPM](https://www.npmjs.com/package/gulp-imagemin).
+- **Enable GZIP** article by Victor Valencia Rico on [Medium](https://medium.com/@victor.valencia.rico/gzip-compression-with-node-js-cc3ed74196f9).
+- **Force HTTPS connection** article on how to implement HTTPS redirect with ExpressJS from [Divio](https://docs.divio.com/en/latest/how-to/node-express-force-https/).
+- **Use Cloudinary** for optimizing externally hosted images. Article from the documentation can be found [here](https://cloudinary.com/documentation/image_optimization).
+- **Detecting online/offline state** to show a message to the user. Article with code examples from [MDN](https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine)
 - **MacBook Pro on wooden Desk** mockup via [MockupWorld](https://www.mockupworld.co/free/macbook-pro-on-wooden-desk-mockup/)
  
 <br>
