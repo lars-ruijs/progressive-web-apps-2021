@@ -20,6 +20,7 @@ You can view the live version of Pictures from Space [here](https://picturesfrom
 | [💡 Concept](#-concept-idea)  |
 | [📊 Data](#-data)  |
 | [📌 Features](#-features)  |
+| [🏎 Performance optimization](#-performance-optimization) |
 | [⬇️ How to install](#%EF%B8%8F-how-to-install)  |
 | [📚 Sources](#-sources) |
 | [🔗 License](#-license) |
@@ -84,6 +85,54 @@ The data that I am using for my concept comes from NASA. I am using two differen
 
 ![detail page about a mars rover with photos](https://user-images.githubusercontent.com/60745347/109162203-3c840d00-7778-11eb-806c-0ada522ec66f.png)
 
+<br>
+
+## 🏎 Performance optimization
+During the last week of this course we have been working on optimizing the performance of the application. Before I had optimized my application, I did two tests. The first test is one from Lighthouse which is built into Chrome, and the other is one from Pingdom. Both test the performance of your application. Lighthouse goes even further by also analyzing the accessibility of your app and the Search Engine Optimization (SEO). 
+
+### Before optimizing
+The image below is a screenshot of the first test I conducted using Lighthouse. In terms of performance, I received a low score for: a slow server response time, delivering images that were too large, render blocking css and not delivering cache on the images. In terms of accessibility, I also scored lower than desired due to the lack of alt texts on some of the images. This also affected the SEO score. 
+
+<img width="334" alt="Schermafbeelding 2021-03-22 om 11 09 42" src="https://user-images.githubusercontent.com/60745347/112175713-c1d3d380-8bf7-11eb-889d-7d5635e9988b.png">
+
+In Pingdom's test the score was quite reasonable, but you can see that the fully loaded time is very high and so is the request size. 
+
+<img width="749" alt="Schermafbeelding 2021-03-23 om 18 01 38" src="https://user-images.githubusercontent.com/60745347/112187095-0f553e00-8c02-11eb-903b-820588a8b992.png">
+
+### Improving the result
+**Minifying & GZIP**
+
+To improve the result, I first started implementing build scripts. With these build scripts I can ensure that my CSS and JS files are minified. This means that for example all comments and indents are removed, leaving one long line of compressed code. This makes the final file the browser receives a lot smaller. In Lighthouse's results, this made my CSS so small that it was no longer perceived as render blocking. The next step was to shrink my images. Although the majority of my images come from a external API, I also have a few of my own. I was able to compress these images in a build script using imagemin. This ensures that the file size of the images is reduced, without the end-user noticing that the quality has been reduced. The next step I applied was the use of GZIP. This compresses the files that are sent from the server to the end user, so the user will receive them faster. 
+
+**External images?**
+
+The last problem I was having is with the external images of my API. These images are hosted on NASA servers and therefore I have little control over the images provided. Lighthouse indicated some performance issues for these images. For example, sometimes the images would be too large and they are delivered in a non-optimal format, such as JPG instead of Webp. In addition, the server sending them does not use HTTP/2 and no caching headers are sent. These are some things that have a big impact on the performance and the score you get for it. In one of Declan's lessons we also discussed the optimization of external images, for example by downloading them and using a `<picture>` element with a `srcset`. In the end, it came out that it was not wise to do this, especially with the time we have left.
+
+Since it still has a very large effect on my load time, I searched online for alternatives. I came across an external service called Cloudinary that allows you to fetch external images and improve their performance. Cloudinary has created a very clever API with an algorithm that makes it possible to compress images without visible quality loss. In addition, you can ask Cloudinary to automatically deliver the correct file format to the user. For example, Cloudinary can automatically deliver Webp images to Chrome users, and JPG-XR to Internet Explorer users, without you having to provide a whole list of sources in `srcset`. A url would look like this: 
+
+```
+https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto/https://apod.nasa.gov/apod/image/1003/ngc1313_gendler.jpg
+```
+
+So you place the Cloudinary part before the original image url. Here `f_auto` stands for the automatic format selection and with `q_auto` the optimal quality for an image is found. In addition to these settings, it is also possible to set a fixed height and width, so my images are never too large. Cloudinary hosts the fetched images on a content delivery network with proper settings for caching, etc. This makes the images load super fast anywhere in the world. 
+
+**Improving accessibility & SEO**
+
+To improve the accessibility of my app, I made sure that all images have a correct `alt` description. In addition, it was important for SEO to add a meta-description to the head of my html. As well as adding a `rel="noreferrer"` to external links and a `title` attribute to iframes. 
+
+**Improving PWA score**
+
+The Progressive Web App section of the Lighthouse scan still revealed the importance of redirecting HTTP traffic to HTTPS. I also applied this by redirecting traffic in production to the secure version of the site. 
+
+### After the optimizations
+After applying the aforementioned optimizations, I obtained the scores below in Lighthouse and Pingdom:
+
+<img width="425" alt="Schermafbeelding 2021-03-23 om 15 24 23" src="https://user-images.githubusercontent.com/60745347/112197852-d078b580-8c0c-11eb-9002-5f13323bb59f.png">
+
+<img width="819" alt="Schermafbeelding 2021-03-23 om 16 47 44" src="https://user-images.githubusercontent.com/60745347/112197941-e6867600-8c0c-11eb-80ab-438e5eca5f89.png">
+
+As you can see I'm scoring green everywhere now! In addition, with Pingdom you can clearly see that the total size of the request has decreased a lot. This is largely due to the minification and optimization of the images. As you can also see, the score is not yet 100 everywhere. This is due to the response time of the server. This is partly dependent on Heroku, but also on my API. This is because I have to send a number of requests before I have all the content I want to show. This takes some time, so the server can only send a response after some time. Still, the score has improved tremendously and the load time has also decreased by almost 1.5 seconds. 
+ 
 <br>
 
 ## ⬇️ How to install
