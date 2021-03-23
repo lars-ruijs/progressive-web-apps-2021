@@ -1,10 +1,9 @@
-const CORE_CACHE = 1;
+const CORE_CACHE = 2;
 const CORE_CACHE_NAME = `core-v${CORE_CACHE}`;
-const CORE_ASSETS = ["manifest.json","/css/styles.css","/img/earth-mars.png","/js/script.js", "/offline"];
+const CORE_ASSETS = ["manifest.json","/css/styles.css","/img/earth-mars.png","/img/offline.png","/js/script.js", "/offline"];
 
 // When service worker gets installed > add core assets to the cache
 self.addEventListener('install', (event) => {
-    console.log("Installed");
     event.waitUntil(
         caches.open(CORE_CACHE_NAME)
         .then(cache => cache.addAll(CORE_ASSETS))
@@ -13,9 +12,19 @@ self.addEventListener('install', (event) => {
 });
 
 // When activated, establish connection between client, service worker and server
+// Delete old cache. Source: https://stackoverflow.com/questions/45467842/how-to-clear-cache-of-service-worker
 self.addEventListener("activate", (event) => {
-    console.log("Activated");
-    event.waitUntil(clients.claim());
+    event.waitUntil(
+        caches.keys().then((keys) => {
+          return Promise.all(
+            keys.map((cache) => {
+              if (cache.includes('core') && cache !== CORE_CACHE_NAME) {
+                return caches.delete(cache);
+              }
+            })
+          );
+        })
+      );
 });
 
 // On fetch > store page response in cache.
@@ -48,6 +57,7 @@ self.addEventListener("fetch", (event) => {
         );
     }
 
+    // Don't cache the mars rover detail pages (too many pictures) 
     else if(getPathName(req.url).includes("rover") || getPathName(req.url).includes("mars") || getPathName(req.url).includes("msl-raw") || getPathName(req.url).includes("mer/gallery")) {
         // show cached request from cache
         event.respondWith(
