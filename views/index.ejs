@@ -9,9 +9,9 @@
                     <article>
                         <figure>
                             <% if (item.media_type === "video") { %> 
-                                <iframe src="<%= item.url %>" frameborder="0" allowfullscreen></iframe>
+                                <iframe src="<%= item.url %>" frameborder="0" title="astronomy video" allowfullscreen></iframe>
                             <% } else if (item.media_type === "image") { %> 
-                                <img src="<%= item.url ? `https://res.cloudinary.com/hvacmd/image/fetch/f_auto,q_auto,w_360,h_260/${item.url}` : '/img/no-picture.png' %> " alt="<%= item.title %> ">
+                                <img src="<%= item.url ? `https://res.cloudinary.com/hvacmd/image/fetch/f_auto,q_auto,w_360,h_260,c_fill/${item.url}` : '/img/no-picture.png' %> " alt="<%= item.title %> ">
                             <% } else { %>  
                                 <img src="/img/no-picture.png" alt="image not found">
                             <% } %>                        

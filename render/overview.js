@@ -16,13 +16,12 @@ export async function homeRoute(req, res) {
     if(rover == "Opportunity") {
       maxSol = 5111;
     }
-    else if(rover == "Spirit") {
+    else if(rover == "Spirit" || rover == "Curiosity") {
       maxSol = 2208;
     }
-    else {
-      const roverInfo = await getData(`${roverBase + rover}`, "page=1");
-      maxSol = roverInfo.rover.max_sol;
-    } 
+    else if(rover == "Perseverance") {
+      maxSol = 31;
+    }
     
     const data = await getData(`${roverBase + rover}/photos`,`sol=${randomNum(maxSol)}&page=1`);
 
