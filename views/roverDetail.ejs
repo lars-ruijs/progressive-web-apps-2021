@@ -27,7 +27,7 @@
                 <% roverData.forEach(rover => { %>
                     <figure>
                         <% const roverImg = rover.img_src.startsWith("https") ? rover.img_src : rover.img_src.replace("http", "https"); %> 
-                        <img src="<%= roverImg %> " alt="<%= rover.camera ? `Picture taken by ${rover.camera.full_name}` : "Picture taken by unknown camera"; %>" />
+                        <img src="<%= `https://res.cloudinary.com/hvacmd/image/fetch/f_auto,q_auto/${roverImg}` %> " alt="<%= rover.camera ? `Picture taken by ${rover.camera.full_name}` : "Picture taken by unknown camera"; %>" />
                         <figcaption>
                             <p><%= rover.camera ? rover.camera.full_name : "Unknown camera"; %> </p>
                         </figcaption>
