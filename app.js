@@ -14,6 +14,7 @@ const port = process.env.PORT || 3000;
 app
     .enable('trust proxy')
     .set('view engine', 'ejs')
+    .use(compression())
     .use(function(request, response, next) {
 
         if (process.env.NODE_ENV != 'development' && !request.secure) {
@@ -22,7 +23,6 @@ app
     
         next();
     })
-    .use(compression())
     .use(express.static('dist'))
     .use('/', router)
     .listen(port);
