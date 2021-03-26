@@ -11,6 +11,8 @@ if ("serviceWorker" in navigator) {
     });
 }
 
+// Show a offline message to the user
+// Source: https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine
 window.addEventListener('offline', () => offline("It looks like you're offline. Check your internet connection."));
 window.addEventListener('online', () => online());
 
