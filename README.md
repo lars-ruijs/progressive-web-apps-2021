@@ -20,6 +20,8 @@ You can view the live version of Pictures from Space [here](https://picturesfrom
 | [💡 Concept](#-concept-idea)  |
 | [📊 Data](#-data)  |
 | [📌 Features](#-features)  |
+| [🏗 Build scripts](#-build-scripts) |
+| [🛠 Manifest & Serviceworker](#-manifest--serviceworker) |
 | [🏎 Performance optimization](#-performance-optimization) |
 | [⬇️ How to install](#%EF%B8%8F-how-to-install)  |
 | [📚 Sources](#-sources) |
@@ -54,7 +56,6 @@ The data that I am using for my concept comes from NASA. I am using two differen
 
 **From the "Mars Rover" dataset:**
 
-- `max_sol`: maximum available sol (date on mars) for which data on the rover is available. Example output: `4` 
 - `img_src`: link to the image taken by the Mars Rover, example output: `"http://mars.nasa.gov/msl-raw/FRB_665678231EDR_F341M_.JPG"`
 - `earth_date`: the date the picture was taken, based on earth dates (formatted as YYYY-MM-DD), example output: `"2004-05-11"`
 - `camera`: an object with information about which rover camera took the picture, example output: `{full_name: "Front Hazard Avoidance Camera", name: "FHAZ"}`
@@ -87,6 +88,146 @@ The data that I am using for my concept comes from NASA. I am using two differen
 
 <br>
 
+- Offline support for the overview page and the Astronomy pages you have previously visited.
+
+![image](https://user-images.githubusercontent.com/60745347/113016264-9c5a4300-917e-11eb-9559-0aca40366c07.png)
+
+<br>
+
+## 🏗 Build scripts 
+By using build scripts, you can have some important or frequently performed tasks automated. In this project, I applied this by minifying my CSS and JS files that are sent to the client. You can also have the self-hosted images reduced in this way using external NPM packages. 
+
+<details>
+ <summary>Build CSS</summary>
+ <br>
+ 
+ Among other things, this script ensures that the CSS files are minified. This is achieved by removing comments and indentations from the code and making it one long line of code. The script can also merge multiple CSS files into a single file, allowing you to split the CSS itself. I have not applied this myself, because my CSS file is not that large. 
+ 
+ ```jsx
+ // Clean and minify CSS > move to dist/css/styles.css
+(function() {
+ return gulp.src('./public/css/styles.css')
+  .pipe(concat('css/styles.css'))
+  .pipe(cleanCSS())
+  .pipe(
+    autoprefixer({
+      cascade: false,
+    })
+  )
+  .pipe(gulp.dest('./dist/'));
+})();
+ ```
+</details>
+
+<details>
+ <summary>Build JavaScript</summary>
+ <br>
+ 
+Similar to the build script for the CSS, this build script causes the client side JavaScript to be reduced. It is also called uglifying, because after minifying, the JavaScript file is actually not readable by a human developer. 
+ 
+ 
+ ```js
+ // Minify script.JS and move it to dist/js
+(function() {
+return gulp
+  .src([
+    './public/js/script.js',
+  ])
+  .pipe(minifyJS())
+  .pipe(gulp.dest('./dist/js/'));
+})();
+ ```
+</details>
+
+<details>
+ <summary>Build Images</summary>
+ <br>
+
+My website mainly uses external images provided by the API. However, there are still some images that I host myself. These are for example the icons, splash screens and error images. When we were working on the performance optimization, it became clear how much influence images have on the loading time and response size. I started looking for an NPM package that could reduce the size of images. For this I used [imagemin](https://www.npmjs.com/package/gulp-imagemin). The build process shows that it saves almost 2MB. 
+
+```jsx
+// Minify images > move them to the dist/img folder
+(function() {
+return gulp.src([
+    './public/img/*.*',
+  ])
+  .pipe(imagemin({verbose: true}))
+  .pipe(gulp.dest('./dist/img'));
+})();
+```
+
+</details>
+
+<br>
+
+## 🛠 Manifest & Serviceworker
+<details>
+ <summary>Manifest</summary>
+ <br>
+ 
+An essential part of an installable progressive web app, is the manifest file. In this file you define a number of settings that, among other things, ensure that when a user installs your application on his device the correct display settings are adopted. For example, you can set which image should be shown as an icon and which name is visible, which color theme the OS can adopt, etc. Below you see an example of a (piece of) the manifest file. 
+
+ 
+ ```json
+ {
+    "name": "Pictures from Space",
+    "short_name": "SPACE",
+    "description": "The most beautiful pictures from space, all in one app.",
+    "lang": "en-EN",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "icons": [
+      {
+        "src": "/img/icon-256x256.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      }
+    ]
+}
+ ```
+ 
+ By putting the line below in the <head> of your HTML, the browser knows where to find the manifest. 
+ 
+```html
+ <link rel="manifest" href="manifest.json">
+```
+ 
+And because Safari likes to do things differently, it's also worth considering putting some settings (which were also already in the manifest) in the `<head>` of your HTML. That way Safari also understands what it needs to do and your application will also be installable on an iPhone. 
+
+```html
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="SPACE">
+    <meta name="apple-mobile-web-app-title" content="SPACE">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+```
+
+What is nice about Safari though is that you can also show a splash screen to the user while they are waiting for the application to load. This adds to an "app-like" experience. What's less fun is that this does have to be specified per iPhone. I used a little [tool](https://appsco.pe/developer/splash-screens) for this. You then place the rules inside the `<head>` of your HTML. Like this:
+ 
+```html
+<link rel="apple-touch-startup-image" href="/img/ip5.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
+```
+
+</details>
+
+<details>
+ <summary>Service worker</summary>
+ <br>
+ 
+ A service worker is essentially in between the client and the server. The service worker can intercept requests to the server and do things with them. In my application I applied the service worker by making (parts of) the site available offline. 
+ 
+In my application, the `install` event causes some essential files to be stored in the browser's cache. These include the stylesheet, some images and the offline page. The install event is executed the moment the page is initialized. 
+
+When the service worker is activated, the `activated` event checks for old cached files. Should the cache number in my script differ from the cache number stored in the browser, then this cache is removed and replaced with the new cache. This allows you to ensure that updated files, such as the offline page, are also updated for users who still have an older cached version inside their browser.
+
+The fetch event is executed when the application sends a network request, for example to receive files from the server or download external images. In the fetch event I first check if cached files are available, if so; they are returned, if not; I clone the responses of the request and store it in the cache. If it is not possible to return a cached version and it is also not possible to return the requested file live, an offline page is shown. In my concept I chose to have the overview page always show new images. Therefore, for the overview page, a cached version is never returned unless the user is offline. The detail pages for the mars rovers are not cached because these detail pages contain a lot of images. The amount of cached files would then increase too much. 
+
+</details>
+
+<br>
+
 ## 🏎 Performance optimization
 During the last week of this course we have been working on optimizing the performance of the application. Before I had optimized my application, I did two tests. The first test is one from Lighthouse which is built into Chrome, and the other is one from Pingdom. Both test the performance of your application. Lighthouse goes even further by also analyzing the accessibility of your app and the Search Engine Optimization (SEO). 
 
@@ -100,13 +241,24 @@ In Pingdom's test the score was quite reasonable, but you can see that the fully
 <img width="749" alt="Schermafbeelding 2021-03-23 om 18 01 38" src="https://user-images.githubusercontent.com/60745347/112187095-0f553e00-8c02-11eb-903b-820588a8b992.png">
 
 ### Improving the result
-**Minifying & GZIP**
 
+<details>
+ <summary>Minifying & GZIP</summary>
+<br>
+ 
 To improve the result, I first started implementing build scripts. With these build scripts I can ensure that my CSS and JS files are minified. This means that for example all comments and indents are removed, leaving one long line of compressed code. This makes the final file the browser receives a lot smaller. In Lighthouse's results, this made my CSS so small that it was no longer perceived as render blocking. The next step was to shrink my images. Although the majority of my images come from a external API, I also have a few of my own. I was able to compress these images in a build script using imagemin. This ensures that the file size of the images is reduced, without the end-user noticing that the quality has been reduced. The next step I applied was the use of GZIP. This compresses the files that are sent from the server to the end user, so the user will receive them faster. 
 
-**External images?**
+```jsx
+app.use(compression())
+```
 
-The last problem I was having is with the external images of my API. These images are hosted on NASA servers and therefore I have little control over the images provided. Lighthouse indicated some performance issues for these images. For example, sometimes the images would be too large and they are delivered in a non-optimal format, such as JPG instead of Webp. In addition, the server sending them does not use HTTP/2 and no caching headers are sent. These are some things that have a big impact on the performance and the score you get for it. In one of Declan's lessons we also discussed the optimization of external images, for example by downloading them and using a `<picture>` element with a `srcset`. In the end, it came out that it was not wise to do this, especially with the time we have left.
+</details>
+
+<details>
+ <summary>External images</summary>
+ <br>
+
+The last problem I was having is with the external images of my API. These images are hosted on NASA servers and therefore I have little control over the images provided. Lighthouse indicated some performance issues for these images. For example, sometimes the images would be too large and they are delivered in a non-optimal format, such as JPG instead of Webp. In addition, the server sending them does not use HTTP/2 and no caching headers are sent. These are some things that have a big impact on the performance and the score you get for it. In one of Declan's lessons we also discussed the optimization of external images, for example by downloading them and using a `<picture>` element with a `srcset`. In the end, it came out that it was not wise to do this, especially with the time we had left.
 
 Since it still has a very large effect on my load time, I searched online for alternatives. I came across an external service called Cloudinary that allows you to fetch external images and improve their performance. Cloudinary has created a very clever API with an algorithm that makes it possible to compress images without visible quality loss. In addition, you can ask Cloudinary to automatically deliver the correct file format to the user. For example, Cloudinary can automatically deliver Webp images to Chrome users, and JPG-XR to Internet Explorer users, without you having to provide a whole list of sources in `srcset`. A url would look like this: 
 
@@ -116,13 +268,33 @@ https://res.cloudinary.com/demo/image/fetch/f_auto,q_auto/https://apod.nasa.gov/
 
 So you place the Cloudinary part before the original image url. Here `f_auto` stands for the automatic format selection and with `q_auto` the optimal quality for an image is found. In addition to these settings, it is also possible to set a fixed height and width, so my images are never too large. Cloudinary hosts the fetched images on a content delivery network with proper settings for caching, etc. This makes the images load super fast anywhere in the world. 
 
-**Improving accessibility & SEO**
+</details>
+
+<details>
+ <summary>Improving accessibility & SEO</summary>
+ <br>
 
 To improve the accessibility of my app, I made sure that all images have a correct `alt` description. In addition, it was important for SEO to add a meta-description to the head of my html. As well as adding a `rel="noreferrer"` to external links and a `title` attribute to iframes. 
 
-**Improving PWA score**
+</details>
+
+<details>
+ <summary>Improving PWA score</summary>
+ <br>
 
 The Progressive Web App section of the Lighthouse scan still revealed the importance of redirecting HTTP traffic to HTTPS. I also applied this by redirecting traffic in production to the secure version of the site. 
+
+```jsx
+app.use((request, response, next) => {
+  if (process.env.NODE_ENV != 'development' && !request.secure) {
+     return response.redirect("https://" + request.headers.host + request.url);
+  }
+
+  next();
+})
+```
+
+</details>
 
 ### After the optimizations
 After applying the aforementioned optimizations, I obtained the scores below in Lighthouse and Pingdom:
@@ -136,7 +308,16 @@ As you can see I'm scoring green everywhere now! In addition, with Pingdom you c
 <br>
 
 ## ⬇️ How to install
-Before you install this application, I kindly request that you use your own API key from NASA and setup a document environment file. The NASA API key is free and can be requested [here](https://api.nasa.gov/). 
+
+### Request your own API key
+This site uses the NASA API to display site content. This requires a NASA API key. You can request this key for free via [this site](https://api.nasa.gov/).
+
+### Setup a .env file
+This application uses an .env file to store variables that do not need to be on GitHub. In the repo you will find an .env.example file. Copy this file and enter your own API key at API_KEY. Change the name to the one below:
+
+```
+.env
+```
 
 ### Clone the repository
 ```
