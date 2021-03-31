@@ -20,7 +20,7 @@ export async function homeRoute(req, res) {
       maxSol = 2208;
     }
     else if(rover == "Perseverance") {
-      maxSol = 31;
+      maxSol = 38;
     }
     
     const data = await getData(`${roverBase + rover}/photos`,`sol=${randomNum(maxSol)}&page=1`);
