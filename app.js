@@ -15,7 +15,7 @@ app
     .enable('trust proxy')
     .set('view engine', 'ejs')
     .use(compression())
-    .use(function(request, response, next) {
+    .use((request, response, next) => {
 
         if (process.env.NODE_ENV != 'development' && !request.secure) {
            return response.redirect("https://" + request.headers.host + request.url);
